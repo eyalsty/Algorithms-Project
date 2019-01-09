@@ -3,17 +3,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <netdb.h>
 #include <unistd.h>
 #include <netinet/in.h>
-
 #include <string.h>
-
 #include <sys/socket.h>
 #include <pthread.h>
 
-#include "ClientHandler.h"
 #include "Server.h"
 
 #define SOCK_OPEN_ERR "ERROR opening socket"
@@ -41,5 +37,4 @@ public:
         this->toStop = true;
     }
 };
-
-#endif //SECONDPART_MYSERIALSERVER_H
+#endif

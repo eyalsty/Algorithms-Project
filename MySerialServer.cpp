@@ -1,4 +1,3 @@
-
 #include "MySerialServer.h"
 
 int openSocket(int portNum) {
@@ -45,15 +44,15 @@ int openSocket(int portNum) {
 
 void *MySerialServer::waitForClients(void *arg) {
     auto *params = (ServerParams *) arg;
-    while (!params->server->toStop) { //while function stop() wasnt called
-
-        int newSock = openSocket(params->port);//open socket and wait for client
-        //client was connected
+    while (!params->server->toStop) {    //while function stop() wasn't called
+        int newSock = openSocket(params->port); //open socket and wait for client
+        //maybe handleClient need to be inside of the open and not here.
         params->client->handleClient(newSock);
-
+    }
 }
 
 void MySerialServer::open(int portNum, ClientHandler *c) {
+    // not forget to do delete!!!!
     auto *params = new ServerParams;
     params->port = portNum;
     params->client = c;

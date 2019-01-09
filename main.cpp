@@ -1,6 +1,9 @@
-#include <iostream>
+#include "StringReverser.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    Solver<string,string>* ss = new StringReverser;
+    string s("Hello, World!");
+    std::cout << ss->solve(s) << std::endl;
+    delete ss;
     return 0;
 }
