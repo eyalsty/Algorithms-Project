@@ -2,10 +2,14 @@
 #define SECONDPART_SERVER_H
 
 
+#include "ClientHandler.h"
+
 namespace server_side {
     class Server {
-        void open(int port, ClientHandler c);
-        void stop();
+
+    public:
+        virtual void open(int portNum, ClientHandler *c) = 0;
+        virtual void stop()= 0;
     };
 }
 
