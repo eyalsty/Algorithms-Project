@@ -52,7 +52,7 @@ string FileCacheManager::getSolutionFor(const string &problem) {
     return isSolutionExists(problem) ? it->second : nullptr;
 }
 
-void FileCacheManager::SaveSolution(const string &problem,
+void FileCacheManager::saveSolution(const string &problem,
                                     const string &solution) {
     probsAndSols.insert(pair<string, string>(problem, solution));
 }

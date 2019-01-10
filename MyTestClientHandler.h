@@ -5,37 +5,31 @@
 #include <cstdlib>
 #include <unistd.h>
 #include <strings.h>
+#include <string>
 #include <cstring>
+#include <iostream>
+
 
 #include "ClientHandler.h"
+#include "Solver.h"
+#include "CacheManager.h"
 
 #define SOCK_READ_ERR "ERROR reading from socket"
+#define WRITE_ERR "ERROR writing to socket"
 
-class MyTestClientHandler: public ClientHandler {
+class MyTestClientHandler : public ClientHandler {
+private:
+    Solver<std::string, std::string> *solver;
+    CacheManager *cacheManager;
+
+    std::string getLineFromSocket(int socketNum);
+
 public:
-//needs to be UPDATED
-    void handleClient (int socket) {
-        char buffer[256];
-        bzero(buffer, 256);
-        int n;
+    MyTestClientHandler(Solver<std::string, std::string> *s, CacheManager *ch) : solver(s), cacheManager(ch) {};
 
-        n = read(socket, buffer, 255); //read 255 bytes
-        if (n < 0) {
-            perror(SOCK_READ_ERR);
-            exit(1);
-        }
+    void handleClient(int socket) override;
 
-        //while client does not send "end", read !
-        while (strcmp(buffer, "end")) {
-                if (n < 0) {
-                    perror(SOCK_READ_ERR);
-                    exit(1);
-                }
-                n = read(socket, buffer, 255);
-            }
-        }
-        close(socket);
-    }
 
 };
+
 #endif

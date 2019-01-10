@@ -11,7 +11,7 @@ public:
 
     virtual string getSolutionFor(const string &problem) = 0;
 
-    virtual void SaveSolution(const string &problem,
+    virtual void saveSolution(const string &problem,
                               const string &solution) = 0;
 
     virtual ~CacheManager() {}

@@ -13,6 +13,8 @@
 #include "Server.h"
 
 #define SOCK_OPEN_ERR "ERROR opening socket"
+#define ACCEPT_ERR "ERROR on accept"
+#define BIND_ERR "ERROR on binding"
 
 using namespace server_side;
 
@@ -31,10 +33,14 @@ public:
     //opens new server with the given port and waits for client
     void open(int portNum, ClientHandler *c);
 
-    static void *waitForClients(void *arg);
+    static void *communicateClients(void *arg);
 
     void stop() {
         this->toStop = true;
+    }
+
+    ~MySerialServer() {
+        pthread_join(thread, nullptr);
     }
 };
 #endif

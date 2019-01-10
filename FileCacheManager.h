@@ -31,7 +31,7 @@ public:
 
     string getSolutionFor(const string &problem);
 
-    void SaveSolution(const string &problem,
+    void saveSolution(const string &problem,
                       const string &solution);
 
     ~FileCacheManager() {

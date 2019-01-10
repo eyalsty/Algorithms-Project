@@ -1,13 +1,15 @@
+#include <iostream>
 #include "MySerialServer.h"
 
-int openSocket(int portNum) {
-    int sockfd, newsockfd, clilen;
+void *MySerialServer::communicateClients(void *arg) {
+    auto *params = (ServerParams *) arg;
+    int serverSocket, clientSocket, clilen;
     struct sockaddr_in serv_addr, cli_addr;
 
     /* First call to socket() function */
-    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 
-    if (sockfd < 0) {
+    if (serverSocket < 0) {
         perror(SOCK_OPEN_ERR);
         exit(1);
     }
@@ -17,11 +19,11 @@ int openSocket(int portNum) {
 
     serv_addr.sin_family = AF_INET;
     serv_addr.sin_addr.s_addr = INADDR_ANY;
-    serv_addr.sin_port = htons(portNum);
+    serv_addr.sin_port = htons(params->port);
 
     /* Now bind the host address using bind() call.*/
-    if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
-        perror("ERROR on binding");
+    if (bind(serverSocket, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
+        perror(BIND_ERR);
         exit(1);
     }
 
@@ -29,38 +31,35 @@ int openSocket(int portNum) {
        * go in sleep mode and will wait for the incoming connection
     */
 
-    listen(sockfd,5);
+    listen(serverSocket, 5);
     clilen = sizeof(cli_addr);
 
-    /* Accept actual connection from the client */
-    newsockfd = accept(sockfd, (struct sockaddr *)&cli_addr, (socklen_t*)&clilen);
-
-    if (newsockfd < 0) {
-        perror("ERROR on accept");
-        exit(1);
-    }
-    return newsockfd;
-}
-
-void *MySerialServer::waitForClients(void *arg) {
-    auto *params = (ServerParams *) arg;
     while (!params->server->toStop) {    //while function stop() wasn't called
-        int newSock = openSocket(params->port); //open socket and wait for client
-        //maybe handleClient need to be inside of the open and not here.
-        params->client->handleClient(newSock);
+        std::cout << "wait for new client" << std::endl;
+        /* Accept actual connection from the client */
+        clientSocket = accept(serverSocket, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
+        std::cout << "connection established" << std::endl;
+
+        if (clientSocket < 0) {
+            perror(ACCEPT_ERR);
+            exit(1);
+        }
+        params->client->handleClient(clientSocket);
+        close(clientSocket);
+        params->server->stop();
     }
+    //there are pointers in struct params , maybe need deletion !!
+    delete params;
 }
 
 void MySerialServer::open(int portNum, ClientHandler *c) {
-    // not forget to do delete!!!!
     auto *params = new ServerParams;
     params->port = portNum;
     params->client = c;
     params->server = this;
     pthread_t trid;
-    pthread_create(&trid, nullptr, waitForClients,
+    pthread_create(&trid, nullptr, communicateClients,
                    params);
     this->thread = trid;
-
 
 }
