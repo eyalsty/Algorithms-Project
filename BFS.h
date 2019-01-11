@@ -6,7 +6,7 @@
 #include "Searcher.h"
 
 class BFS: public Searcher {
-    std::vector<State<MyState>> search (Searchable * searchable) override {
+    std::vector<MyState> search (Searchable * searchable) override {
 
     }
 };

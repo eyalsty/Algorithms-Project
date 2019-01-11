@@ -6,7 +6,7 @@
 
 class Searcher {
 public:
-    virtual std::vector<State<MyState>> search(Searchable *searchable) =0;
+    virtual std::vector<MyState> search(Searchable *searchable) =0;
 
     virtual ~Searcher() {}
 
