@@ -30,13 +30,13 @@ Id MazeMatrix::getSpecialState(const string &line) {
 void MazeMatrix::saveMatrixRow(const string &row, int rowNum) {
     int colNum = 0;
     double cost;
-    vector<MyState> stateLine;
+    vector<MyState*> stateLine;
     stringstream ss(row);
 
     while (ss >> cost) {
         // getting a specific state. its Id is its index.
         Id id(rowNum, colNum);
-        MyState s(id, cost);
+        MyState* s = new MyState(id, cost);
 
         // saving the node in its correct row.
         stateLine.push_back(s);
@@ -49,8 +49,8 @@ void MazeMatrix::saveMatrixRow(const string &row, int rowNum) {
     states.push_back(stateLine);
 }
 
-vector<MyState> MazeMatrix::getAllPossibleStates(const MyState &s) {
-    vector<MyState> adj;
+vector<MyState*> MazeMatrix::getAllPossibleStates(const MyState &s) {
+    vector<MyState*> adj;
     Id sId = s.getStateId();
     // number of cols and rows of the maze matrix.
     int colsNum = states.at(0).size();

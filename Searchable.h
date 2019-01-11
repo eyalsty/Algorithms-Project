@@ -31,9 +31,9 @@ public:
 
     virtual bool isGoalState(const MyState &state) = 0;
 
-    virtual MyState getInitialState() = 0;
+    virtual MyState* getInitialState() = 0;
 
-    virtual std::vector<MyState> getAllPossibleStates(const MyState &s) = 0;
+    virtual std::vector<MyState*> getAllPossibleStates(const MyState &s) = 0;
 
     virtual ~Searchable() {}
 };

@@ -8,7 +8,7 @@
 using namespace std;
 
 class MazeMatrix : public Searchable {
-    vector<vector<MyState> > states;
+    vector<vector<MyState *> > states;
     Id src;
     Id trg;
 
@@ -19,14 +19,24 @@ class MazeMatrix : public Searchable {
 public:
     explicit MazeMatrix(vector<string> data);
 
-    virtual vector<MyState> getAllPossibleStates(const State<Id> &s);
+    virtual vector<MyState *> getAllPossibleStates(const MyState &s);
 
     virtual bool isGoalState(const MyState &state) {
         return trg == state.getStateId();
     }
 
-    virtual MyState getInitialState() {
+    virtual MyState *getInitialState() {
         return states[src.row][src.col];
+    }
+
+    ~MazeMatrix() {
+        auto it = states.begin();
+        for (; it != states.end(); ++it) {
+            auto inner = it->begin();
+            for(;inner != it->end();++inner){
+                delete *inner;
+            }
+        }
     }
 };
 

@@ -29,10 +29,10 @@ int main() {
                              "3,3"};
     Searchable *s = new MazeMatrix(matrix);
     State<Id> node(Id(3, 1), 21);
-    State<Id> init = s->getInitialState();
+    State<Id>* init = s->getInitialState();
     State<Id> goal(Id(3, 3), 16);
     bool t = s->isGoalState(goal);
-    vector<State<Id> > v = s->getAllPossibleStates(State<Id>(Id(2, 2), 11));
+    vector<State<Id>* > v = s->getAllPossibleStates(State<Id>(Id(2, 2), 11));
     delete s;
     return 0;
 }
