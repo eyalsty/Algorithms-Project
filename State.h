@@ -2,7 +2,7 @@
 #define SECONDPART_STATE_H
 
 
-#define INFINITY -1
+#define INF -1
 
 typedef enum {
     white, grey, black
@@ -19,7 +19,7 @@ public:
     State(const T &_stateId, double _cost) :
             stateId(_stateId), edgeCost(_cost) {
         cameFrom = nullptr;
-        minPath = INFINITY;
+        minPath = INF;
         color = white;
     }
 

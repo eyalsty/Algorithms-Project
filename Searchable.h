@@ -6,16 +6,34 @@
 
 #include "State.h"
 
-template<class T>
+struct Id {
+    int row;
+    int col;
+
+    Id() = default;
+
+    Id(int _row, int _col) {
+        row = _row;
+        col = _col;
+    }
+
+    bool operator==(const Id &other) {
+        return this->col == other.col && this->row == other.row;
+    }
+};
+
+/* so if we will want to change the template argument (note that now its Id),
+ * we will need to do it only in one place. */
+typedef State<Id> MyState;
+
 class Searchable {
 public:
-    //virtual void create(std::vector<std::string> data) = 0;
 
-    virtual bool isGoalState(const State<T> &state) = 0;
+    virtual bool isGoalState(const MyState &state) = 0;
 
-    virtual State<T> getInitialState() = 0;
+    virtual MyState getInitialState() = 0;
 
-    virtual std::vector<State<T>> getAllPossibleStates(const State<T> &s) = 0;
+    virtual std::vector<MyState> getAllPossibleStates(const MyState &s) = 0;
 
     virtual ~Searchable() {}
 };

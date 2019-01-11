@@ -7,28 +7,8 @@
 
 using namespace std;
 
-struct Id {
-    int row;
-    int col;
-
-    Id() = default;
-
-    Id(int _row, int _col) {
-        row = _row;
-        col = _col;
-    }
-
-    bool operator==(const Id &other) {
-        return this->col == other.col && this->row == other.row;
-    }
-};
-
-/* so if we will want to change the template argument, we will
- * do it only in one place. */
-typedef State<Id> MyState;
-
-class MazeMatrix : public Searchable<Id> {
-    vector<vector<MyState>> states;
+class MazeMatrix : public Searchable {
+    vector<vector<MyState> > states;
     Id src;
     Id trg;
 
