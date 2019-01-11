@@ -36,17 +36,31 @@ void *MySerialServer::communicateClients(void *arg) {
 
     while (!params->server->toStop) {    //while function stop() wasn't called
         std::cout << "wait for new client" << std::endl;
+
+        timeval timeout;
+        timeout.tv_sec = 15;
+        timeout.tv_usec = 0;
+
+        setsockopt(serverSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+
+
         /* Accept actual connection from the client */
         clientSocket = accept(serverSocket, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
         std::cout << "connection established" << std::endl;
 
-        if (clientSocket < 0) {
-            perror(ACCEPT_ERR);
-            exit(1);
+        if (clientSocket < 0)	{
+            if (errno == EWOULDBLOCK)	{
+                std::cout << "timeout!" << std::endl;
+                //exit(2);
+                continue;
+            }	else	{
+                perror(ACCEPT_ERR);
+                exit(3);
+            }
         }
         params->client->handleClient(clientSocket);
         close(clientSocket);
-        params->server->stop();
+        //params->server->stop();
     }
     //there are pointers in struct params , maybe need deletion !!
     delete params;
@@ -61,5 +75,4 @@ void MySerialServer::open(int portNum, ClientHandler *c) {
     pthread_create(&trid, nullptr, communicateClients,
                    params);
     this->thread = trid;
-
 }
