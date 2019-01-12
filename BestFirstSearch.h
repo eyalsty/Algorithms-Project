@@ -5,9 +5,7 @@
 #include "Searcher.h"
 
 class BestFirstSearch: public Searcher {
-    std::vector<MyState> search (Searchable * searchable) override {
-
-    }
+    std::vector<MyState> search (Searchable * searchable) override ;
 };
 
 

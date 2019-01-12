@@ -33,6 +33,8 @@ public:
 
     virtual MyState* getInitialState() = 0;
 
+    virtual MyState* getGoal() = 0;
+
     virtual std::vector<MyState*> getAllPossibleStates(const MyState &s) = 0;
 
     virtual ~Searchable() {}

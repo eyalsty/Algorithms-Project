@@ -6,11 +6,11 @@
 #include "Solver.h"
 #include "Searchable.h"
 
-class SearchSolver : public Solver<Searchable *, std::vector<MyState>> {
+class SearchSolver : public Solver<Searchable *, std::vector<MyState*>> {
 private:
     Searcher *searcher;
 public:
-    std::vector<MyState> solve(Searchable *const &searchable) {
+    std::vector<MyState*> solve(Searchable *const &searchable) {
         return this->searcher->search(searchable);
     }
 

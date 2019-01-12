@@ -19,21 +19,25 @@ class MazeMatrix : public Searchable {
 public:
     explicit MazeMatrix(vector<string> data);
 
-    virtual vector<MyState *> getAllPossibleStates(const MyState &s);
+    vector<MyState *> getAllPossibleStates(const MyState &s) override;
 
-    virtual bool isGoalState(const MyState &state) {
+    bool isGoalState(const MyState &state) override {
         return trg == state.getStateId();
     }
 
-    virtual MyState *getInitialState() {
+    MyState *getInitialState() override {
         return states[src.row][src.col];
+    }
+
+    MyState *getGoal() override {
+        return states[trg.row][trg.col];
     }
 
     ~MazeMatrix() {
         auto it = states.begin();
         for (; it != states.end(); ++it) {
             auto inner = it->begin();
-            for(;inner != it->end();++inner){
+            for (; inner != it->end(); ++inner) {
                 delete *inner;
             }
         }
