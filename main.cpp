@@ -7,6 +7,8 @@
 #include "MyTestClientHandler.h"
 #include "MazeMatrix.h"
 #include "BFS.h"
+#include "Astar.h"
+
 
 using namespace std;
 
@@ -22,7 +24,7 @@ int main() {
                              "0,0",
                              "3,3"};
     Searchable *searchable = new MazeMatrix(matrix);
-    Searcher *searcher = new BFS;
+    Searcher *searcher = new Astar;
     vector<MyState*> solution = searcher->search(searchable);
     int n = searcher->getEvaluatedCounter();
 

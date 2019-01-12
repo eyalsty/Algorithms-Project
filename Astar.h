@@ -21,23 +21,19 @@ private:
     Searchable *searchable;
 public:
 
-    std::vector<MyState *> search(Searchable *searchable) override {
-        openMyPriorityQueue q;
-        q.push(std::pair<searchable->getInitialState(),getHuristic(std::pair<searchable->getInitialState(), ) );
+    std::vector<MyState *> search(Searchable *searchable) override;
 
+    int getEvaluatedCounter() override ;
 
-    }
+    std::vector<MyState *> traceBack(MyState *trg) override;
+
+    double getHuristic(MyState *curr);
+
+    double calcF(MyState *s);
+
+    openMyPriorityQueue addAndUpdate(openMyPriorityQueue old, MyState *toAdd);
+
 };
-
-
-double getHuristic(MyState *curr, MyState *trg) {
-    return sqrt(pow(curr->getStateId().row - trg->getStateId().row, 2) +
-                pow(curr->getStateId().col - trg->getStateId().col, 2));
-}
-
-double calcF(MyState* s) {
-    return pair<
-}
 
 
 #endif //SECONDPART_A_H
