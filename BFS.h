@@ -14,7 +14,7 @@ public:
     std::vector<MyState *> search(Searchable *searchable) override {
         std::queue<MyState *> q;
         std::vector<MyState *> adj;
-        MyState *s, *v;
+        MyState *s;
         s = searchable->getInitialState();
         s->setMinPath(0);
         s->setColor(grey);

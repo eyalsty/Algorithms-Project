@@ -33,7 +33,7 @@ public:
         return states[trg.row][trg.col];
     }
 
-    ~MazeMatrix() {
+    ~MazeMatrix() override {
         auto it = states.begin();
         for (; it != states.end(); ++it) {
             auto inner = it->begin();

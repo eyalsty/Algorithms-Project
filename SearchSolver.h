@@ -6,12 +6,14 @@
 #include "Solver.h"
 #include "Searchable.h"
 
-class SearchSolver : public Solver<Searchable *, std::vector<MyState*>> {
+class SearchSolver : public Solver<Searchable *, std::vector<MyState *>> {
 private:
     Searcher *searcher;
 public:
-    std::vector<MyState*> solve(Searchable *const &searchable) {
-        return this->searcher->search(searchable);
+    explicit SearchSolver(Searcher *_searcher) : searcher(_searcher) {}
+
+    std::vector<MyState *> solve(Searchable *const &searchable) override {
+        return searcher->search(searchable);
     }
 
     ~SearchSolver() {
