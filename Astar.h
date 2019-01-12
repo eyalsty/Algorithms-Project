@@ -6,8 +6,8 @@
 #include "Searcher.h"
 
 struct AstarComparator {
-    bool operator()(std::pair<MyState *, double> *l, std::pair<MyState *, double> *r) {
-        return l->second > r->second;
+    bool operator()(std::pair<MyState *, double> l, std::pair<MyState *, double> r) {
+        return l.second > r.second;
     }
 };
 

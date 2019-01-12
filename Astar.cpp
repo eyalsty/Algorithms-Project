@@ -1,6 +1,7 @@
 #include "Astar.h"
 
 std::vector<MyState *> Astar::search(Searchable *searchable) {
+    this->searchable = searchable;
     openMyPriorityQueue q;
     std::vector<MyState *> adj;
     MyState *s = searchable->getInitialState();
@@ -31,6 +32,7 @@ std::vector<MyState *> Astar::search(Searchable *searchable) {
             }
         }
         s->setColor(black);
+        this->evaluatedCounter++;
     }
     return traceBack(searchable->getGoal());
 }

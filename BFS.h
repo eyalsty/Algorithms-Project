@@ -13,7 +13,6 @@ private:
 public:
     std::vector<MyState *> search(Searchable *searchable) override;
 
-
     int getEvaluatedCounter() override;
 
     std::vector<MyState *> traceBack(MyState *trg) override;
