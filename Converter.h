@@ -6,6 +6,6 @@
 
 using namespace std;
 
-stack<string> fromStatesToStrings(vector<MyState *> path);
+string fromStatesToStrings(vector<MyState *> path);
 
-#endif //SECONDPART_CONVERTER_H
+#endif

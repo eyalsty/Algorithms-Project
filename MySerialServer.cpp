@@ -36,11 +36,11 @@ void *MySerialServer::communicateClients(void *arg) {
     while (!params->server->toStop) {    //while function stop() wasn't called
         std::cout << "wait for new client" << std::endl;
 
-        timeval timeout;
-        timeout.tv_sec = 15;
-        timeout.tv_usec = 0;
-
-        setsockopt(serverSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+//        timeval timeout;
+//        timeout.tv_sec = 15;
+//        timeout.tv_usec = 0;
+//
+//        setsockopt(serverSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
 
 
         /* Accept actual connection from the client */
