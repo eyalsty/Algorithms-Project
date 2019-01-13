@@ -17,15 +17,10 @@ typedef std::priority_queue<std::pair<MyState *, double>, std::vector<std::pair<
 
 class Astar : public Searcher {
 private:
-    int evaluatedCounter = 0;
-    Searchable *searchable;
+    Searchable *searchable; //being Initialized in "search" function
 public:
 
     std::vector<MyState *> search(Searchable *searchable) override;
-
-    int getEvaluatedCounter() override ;
-
-    std::vector<MyState *> traceBack(MyState *trg) override;
 
     double getHuristic(MyState *curr);
 

@@ -1,20 +1,20 @@
-#ifndef SECONDPART_SEARCHER_H
-#define SECONDPART_SEARCHER_H
+#ifndef SECONDPART_ISEARCHER_H
+#define SECONDPART_ISEARCHER_H
 
+#include "ISearcher.h"
 
-#include "Searchable.h"
+class Searcher : public ISearcher {
 
-class Searcher {
 public:
-    virtual std::vector<MyState *> search(Searchable *searchable) = 0;
+    int evaluatedNodes;
+    Searcher() : evaluatedNodes(0) {}
 
-    virtual int getEvaluatedCounter() = 0;
+    std::vector<MyState *> traceBack(MyState *node) override;
 
-    virtual std::vector<MyState *> traceBack(MyState *trg) = 0;
+    int getEvaluatedCounter() override {
+        return evaluatedNodes;
+    }
 
-
-    virtual ~Searcher() {}
 };
 
-
-#endif
+#endif //SECONDPART_SEARCHER_H

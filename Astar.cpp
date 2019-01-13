@@ -32,7 +32,7 @@ std::vector<MyState *> Astar::search(Searchable *searchable) {
             }
         }
         s->setColor(black);
-        this->evaluatedCounter++;
+        ++evaluatedNodes;
     }
     return traceBack(searchable->getGoal());
 }
@@ -61,18 +61,4 @@ openMyPriorityQueue Astar::addAndUpdate(openMyPriorityQueue old, MyState *toAdd)
         }
     }
     return newQueue;
-}
-
-int Astar::getEvaluatedCounter() {
-    return this->evaluatedCounter;
-}
-
-std::vector<MyState *> Astar::traceBack(MyState *trg) {
-    std::vector<MyState *> path;
-    MyState *curr = trg;
-    while (curr != nullptr) {
-        path.push_back(curr);
-        curr = curr->getCameFrom();
-    }
-    return path;
 }

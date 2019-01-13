@@ -21,23 +21,8 @@ std::vector<MyState *> BFS::search(Searchable *searchable) {
             }
         }
         s->setColor(black);
-        evaluatedCounter++;
+        ++evaluatedNodes;
     }
 //return the path to the goal
     return traceBack(searchable->getGoal());
-}
-
-
-int BFS::getEvaluatedCounter() {
-    return this->evaluatedCounter;
-}
-
-std::vector<MyState *> BFS::traceBack(MyState *trg) {
-    std::vector<MyState *> path;
-    MyState *curr = trg;
-    while (curr != nullptr) {
-        path.push_back(curr);
-        curr = curr->getCameFrom();
-    }
-    return path;
 }
