@@ -1,6 +1,7 @@
 #include "Converter.h"
 
-stack<string> fromStatesToStrings(vector<MyState *> path) {
+string fromStatesToStrings(vector<MyState *> path) {
+    string answer;
     stack<string> directions;
     for (auto &curr : path) {
         if (curr->getCameFrom() == nullptr) {
@@ -19,5 +20,14 @@ stack<string> fromStatesToStrings(vector<MyState *> path) {
         }
 
     }
-    return directions;
+    while (!directions.empty()) {
+        string token = directions.top();
+        directions.pop();
+
+        answer += token;
+        if (!directions.empty()) {
+            answer += ',';
+        }
+    }
+    return answer;
 }

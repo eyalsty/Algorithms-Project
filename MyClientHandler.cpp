@@ -38,14 +38,16 @@ void MyClientHandler::handleClient(int socket) {
     vector<string> matrix;
 
     getMatrixFromClient(matrix, socket);
+
     if (cm->isSolutionExists(matrix)) {
         answer = cm->getSolutionFor(matrix);
     } else {
         Searchable *maze = new MazeMatrix(matrix);
         vector<MyState *> states = solver->solve(maze);
+        answer = fromStatesToStrings(states);
+        cm->saveSolution(matrix,answer);
 
-        //stack<string> directions = fromStatesToStrings(states);
-        //answer =
+        delete maze;    // check if its works
     }
 
     n = write(socket, answer.c_str(), answer.size());
