@@ -30,13 +30,13 @@ Id MazeMatrix::getSpecialState(const string &line) {
 void MazeMatrix::saveMatrixRow(const string &row, int rowNum) {
     int colNum = 0;
     double cost;
-    vector<MyState*> stateLine;
+    vector<MyState *> stateLine;
     stringstream ss(row);
 
     while (ss >> cost) {
         // getting a specific state. its Id is its index.
         Id id(rowNum, colNum);
-        MyState* s = new MyState(id, cost);
+        MyState *s = new MyState(id, cost);
 
         // saving the node in its correct row.
         stateLine.push_back(s);
@@ -49,24 +49,28 @@ void MazeMatrix::saveMatrixRow(const string &row, int rowNum) {
     states.push_back(stateLine);
 }
 
-vector<MyState*> MazeMatrix::getAllPossibleStates(const MyState &s) {
-    vector<MyState*> adj;
+bool MazeMatrix::isStateNotInf(int row, int col) {
+    return states[row][col]->getEdgeCost() != INF;
+}
+
+vector<MyState *> MazeMatrix::getAllPossibleStates(const MyState &s) {
+    vector<MyState *> adj;
     Id sId = s.getStateId();
     // number of cols and rows of the maze matrix.
     int colsNum = states.at(0).size();
     int rowsNum = states.size();
 
     // checks for limits, and add adj accordingly.
-    if (sId.row > 0) {
+    if (sId.row > 0 && isStateNotInf(sId.row - 1, sId.col)) {
         adj.push_back(states[sId.row - 1][sId.col]);
     }
-    if (sId.row < rowsNum - 1) {
+    if (sId.row < rowsNum - 1 && isStateNotInf(sId.row + 1, sId.col)) {
         adj.push_back(states[sId.row + 1][sId.col]);
     }
-    if (sId.col > 0) {
+    if (sId.col > 0 && isStateNotInf(sId.row, sId.col - 1)) {
         adj.push_back(states[sId.row][sId.col - 1]);
     }
-    if (sId.col < colsNum - 1) {
+    if (sId.col < colsNum - 1 && isStateNotInf(sId.row, sId.col + 1)) {
         adj.push_back(states[sId.row][sId.col + 1]);
     }
     return adj;

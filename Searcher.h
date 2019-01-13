@@ -4,9 +4,10 @@
 #include "ISearcher.h"
 
 class Searcher : public ISearcher {
+protected:
+    int evaluatedNodes;
 
 public:
-    int evaluatedNodes;
     Searcher() : evaluatedNodes(0) {}
 
     std::vector<MyState *> traceBack(MyState *node) override;

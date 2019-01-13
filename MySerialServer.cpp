@@ -1,4 +1,3 @@
-#include <iostream>
 #include "MySerialServer.h"
 
 void *MySerialServer::communicateClients(void *arg) {

@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <pthread.h>
+#include <iostream>
 
 #include "Server.h"
 

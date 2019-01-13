@@ -16,6 +16,8 @@ class MazeMatrix : public Searchable {
 
     void saveMatrixRow(const string &row, int rowNum);
 
+    bool isStateNotInf(int row,int col);
+
 public:
     explicit MazeMatrix(vector<string> data);
 

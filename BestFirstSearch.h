@@ -4,7 +4,6 @@
 #include <queue>
 #include <set>
 
-#include "Searchable.h"
 #include "Searcher.h"
 
 struct comparator {

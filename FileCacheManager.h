@@ -1,7 +1,8 @@
 #ifndef SECONDPART_FILECACHEMANAGER_H
 #define SECONDPART_FILECACHEMANAGER_H
 
-#include <unordered_map>
+#include <map>
+#include <vector>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -15,27 +16,29 @@
 #define EOL '\n'
 
 class FileCacheManager : public CacheManager {
-    unordered_map<string, string> probsAndSols;
+    map<vector<string>, string> probsAndSols;
 
     /* Private Helper methods. */
+    void terminateEOL(string& line);
+
     bool loadData(const char *fileName);
 
     bool saveData(const char *fileName);
-
 public:
     FileCacheManager() {
         this->loadData(FILE_NAME);
     }
 
-    bool isSolutionExists(const string &problem);
+    bool isSolutionExists(const vector<string> &problem) override;
 
-    string getSolutionFor(const string &problem);
+    string getSolutionFor(const vector<string> &problem) override;
 
-    void saveSolution(const string &problem,
-                      const string &solution);
+    void saveSolution(const vector<string> &problem,
+                      const string &solution) override;
 
     ~FileCacheManager() {
         this->saveData(FILE_NAME);
     }
 };
+
 #endif

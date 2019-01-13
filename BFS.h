@@ -4,7 +4,6 @@
 
 #include <queue>
 #include <algorithm>
-#include "Searchable.h"
 #include "Searcher.h"
 
 class BFS : public Searcher {

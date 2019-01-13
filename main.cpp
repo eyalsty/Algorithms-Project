@@ -1,5 +1,3 @@
-#include <iostream>
-#include <algorithm>
 
 #include "StringReverser.h"
 #include "FileCacheManager.h"
@@ -8,7 +6,7 @@
 #include "MazeMatrix.h"
 #include "BFS.h"
 #include "Astar.h"
-#include "Converter.h"
+#include "MyClientHandler.h"
 #include "DFS.h"
 #include "BestFirstSearch.h"
 
@@ -25,6 +23,8 @@ int main() {
                              "13,14,15,16",
                              "3,3",
                              "0,0"};
+    Server *server = new MySerialServer;
+    //ClientHandler *ch = MyClientHandler()
     Searchable *searchable = new MazeMatrix(matrix);
     ISearcher *searcher = new BestFirstSearch;
     vector<MyState *> solution = searcher->search(searchable);

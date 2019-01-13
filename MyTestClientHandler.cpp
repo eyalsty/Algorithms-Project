@@ -15,15 +15,16 @@ std::string MyTestClientHandler::getLineFromSocket(int socketNum) {
 
 void MyTestClientHandler::handleClient(int socketNum) {
     std::string result;
-    std::string line = getLineFromSocket(socketNum);
+    vector<string> line;
+    line.push_back(getLineFromSocket(socketNum));
     int n;
-    while (line != "end") {
-        std::cout << "received: " << line << std::endl; //indication for us
+    while (line.at(0) != "end") {
+        std::cout << "received: " << line.at(0) << std::endl; //indication for us
         //get solution
         if (this->cacheManager->isSolutionExists(line)) {
             result = cacheManager->getSolutionFor(line);
         } else {
-            result = this->solver->solve(line);
+            result = this->solver->solve(line.at(0));
             this->cacheManager->saveSolution(line, result);
         }
 
@@ -35,6 +36,6 @@ void MyTestClientHandler::handleClient(int socketNum) {
         }
         std::cout << "result: " << result << std::endl; //indication for us
         //get next line
-        line = getLineFromSocket(socketNum);
+        line.push_back(getLineFromSocket(socketNum));
     }
 }

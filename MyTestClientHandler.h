@@ -25,7 +25,7 @@ private:
     std::string getLineFromSocket(int socketNum);
 
 public:
-    MyTestClientHandler(Solver<std::string, std::string> *s, CacheManager *ch) : solver(s), cacheManager(ch) {};
+    MyTestClientHandler(Solver<std::string, std::string> *s, CacheManager *ch) : solver(s), cacheManager(ch) {}
 
     void handleClient(int socket) override;
 

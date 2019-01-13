@@ -1,7 +1,6 @@
 #ifndef SECONDPART_DFS_H
 #define SECONDPART_DFS_H
 
-#include "Searchable.h"
 #include "Searcher.h"
 
 #include <stack>
