@@ -59,7 +59,7 @@ void *MySerialServer::communicateClients(void *arg) {
         }
         params->client->handleClient(clientSocket);
         close(clientSocket);
-        //params->server->stop();
+        params->server->stop();
     }
     //there are pointers in struct params , maybe need deletion !!
     delete params;

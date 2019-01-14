@@ -12,24 +12,64 @@
 
 using namespace std;
 
+typedef Solver<Searchable *, vector<MyState *> > MySolver;
+
+
+void getMatrix(vector<string>& matrix, ifstream& file,int& counter){
+    string line;
+    if(!matrix.empty()){
+        matrix.clear();
+    }
+    while (getline(file, line)) {
+
+        if (line[line.length() - 1] == '\r') {
+            line = line.substr(0, line.length() - 1);
+        }
+
+        if(line == "$"){
+            ++counter;
+            break;
+        }
+        matrix.push_back(line);
+    }
+}
+
+
 
 int main() {
+    const char *fileName = "graphs.txt";
+    const char* fileName2 = "solution.txt";
 
-    // checks for the MazeMatrix Class !
-    vector<string> matrix = {"1,2,50,4",
-                             "0,6,7,50",
-                             "1,10,11,50",
-                             "1,11,1,16",
-                             "3,3",
-                             "0,0"};
-    Server *server = new MySerialServer;
-    ISearcher *searcher = new BestFirstSearch;
-    Solver<Searchable*,vector<MyState*> >* solver = new SearchSolver(searcher);
-    CacheManager* cm = new FileCacheManager();
+    int counter = 0;
+    vector<string> matrix;
 
-    ClientHandler* ch = new MyClientHandler(solver,cm);
-    server->open(12345,ch);
+    ifstream file(fileName);
+    ofstream file2(fileName2);
+    if (!file || !file2) {
+        cout << "ERROR reading from file" << endl;
+    }
 
-    delete server;
+    while (counter != 10) {
+
+        getMatrix(matrix,file,counter);
+
+        ISearcher *bestFirstSearch = new BestFirstSearch();
+        MySolver *solver = new SearchSolver(bestFirstSearch);
+
+        Searchable *searchable = new MazeMatrix(matrix);
+        vector<MyState *> solution = solver->solve(searchable);
+
+        int nodeNum = bestFirstSearch->getEvaluatedCounter();
+        double minPath = searchable->getGoal()->getMinPath();
+
+        file2 << minPath << ',' << nodeNum << endl;
+
+        delete bestFirstSearch;
+        delete solver;
+        delete searchable;
+    }
+
+    file.close();
+    file2.close();
     return 0;
 }
