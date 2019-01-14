@@ -36,6 +36,7 @@ void MyParallelServer::open(int portNum, ClientHandler *c) {
     ////////////////////////////////////////////////////////////////////////////
 
     //////////////////////WAIT ENDLESSLY FOR FIRST CLIENT/////////////////////////////////
+    std::cout << "wait for first client" << std::endl;
     /* Accept actual connection from the client */
     clientSocket = accept(serverSocket, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
     std::cout << "first connection established" << std::endl;
@@ -52,35 +53,38 @@ void MyParallelServer::open(int portNum, ClientHandler *c) {
                        params);
         this->threads.push(trid);
 
-        //        timeval timeout;
-//        timeout.tv_sec = 15;
-//        timeout.tv_usec = 0;
-//
-//        setsockopt(serverSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+        timeval timeout;
+        timeout.tv_sec = 10;
+        timeout.tv_usec = 0;
+
+        setsockopt(serverSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
 
 
         /////////////////////WAIT FOR NEW CLIENT//////////////////////////////
         std::cout << "wait for new client" << std::endl;
         clientSocket = accept(serverSocket, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
-        /*if (clientSocket < 0)	{
+        if (clientSocket < 0)	{
             if (errno == EWOULDBLOCK)	{
                 std::cout << "timeout!" << std::endl;
-                //exit(2);
-                continue;
+                break;
             }	else	{
                 perror(ACCEPT_ERR);
                 exit(3);
             }
-        }*/
-
+        }
         std::cout << "new connection established" << std::endl;
+        //WHILE CONNECTING - WAIT INFINITY
+        timeout.tv_sec = 0;
+        timeout.tv_usec = 0;
+
+        setsockopt(clientSocket, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
     }
+    close(serverSocket);
 }
 
 
 void *MyParallelServer::communicateClients(void *arg) {
     auto *params = (ServerParams *) arg;
-
     params->client->handleClient(params->socketID);
     close(params->socketID);
     delete params; //there are pointers in struct params , maybe need deletion !!

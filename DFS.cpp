@@ -1,14 +1,14 @@
 #include "DFS.h"
 
 std::vector<MyState *> DFS::search(Searchable *graph) {
-    MyState *goal = nullptr;
     stack.push(graph->getInitialState());
 
     while (!stack.empty()) {
         MyState *node = stack.top();
         stack.pop();
         if (graph->isGoalState(*node)) {
-            goal = node;
+            //goal = node;
+            return traceBack(node);
         }
 
         if (node->getColor() == white) {
@@ -23,10 +23,11 @@ std::vector<MyState *> DFS::search(Searchable *graph) {
 
                 if ((*it)->getColor() == white) {
                     (*it)->setCameFrom(node);
+                    (*it)->setMinPath(node->getMinPath() +
+                                      (*it)->getEdgeCost());
                     stack.push(*it);
                 }
             }
         }
     }
-    return traceBack(goal);
 }

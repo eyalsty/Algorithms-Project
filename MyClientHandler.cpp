@@ -44,13 +44,15 @@ void MyClientHandler::handleClient(int socket) {
     } else {
         Searchable *maze = new MazeMatrix(matrix);
         vector<MyState *> states = solver->solve(maze);
-        answer = fromStatesToStrings(states);
-        cm->saveSolution(matrix,answer);
-
-        delete maze;    // check if its works
+        if (states.at(0)->getMinPath() == INF) {
+            answer = "INFINITY";
+        } else {
+            answer = fromStatesToStrings(states);
+        }
+        cm->saveSolution(matrix, answer);
+        delete maze;
     }
 
     n = write(socket, answer.c_str(), answer.size());
     ifError(n, "ERROR writing to socket");
-
 }

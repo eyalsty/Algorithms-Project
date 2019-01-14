@@ -1,9 +1,6 @@
 #ifndef SECONDPART_MYPARALLELSERVER_H
 #define SECONDPART_MYPARALLELSERVER_H
 
-#ifndef SECONDPART_MYSERIALSERVER_H
-#define SECONDPART_MYSERIALSERVER_H
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <netdb.h>
@@ -21,9 +18,8 @@
 #define ACCEPT_ERR "ERROR on accept"
 #define BIND_ERR "ERROR on binding"
 
-using namespace server_side;
 
-class MyParallelServer : public Server{
+class MyParallelServer : public server_side::Server{
 private:
     bool toStop = false;
     std::queue<pthread_t> threads;
@@ -52,6 +48,5 @@ public:
     }
 
 };
-
 
 #endif //SECONDPART_MYPARALLELSERVER_H
