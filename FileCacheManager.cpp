@@ -10,9 +10,7 @@ bool FileCacheManager::loadData(const char *fileName) {
     string line, solution;
     ifstream file(fileName);
     vector<string> problem;
-
     if (!file) {
-        std::cout << ERR_LOAD << fileName << std::endl;
         return false;
     }
 

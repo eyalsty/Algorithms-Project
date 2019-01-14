@@ -14,15 +14,23 @@
 using namespace std;
 
 
-int main() {
-   int port = 12345;
+int main(int argc, char* argv[]) {
+   int port = stoi(argv[1]);
    Server* server= new MyParallelServer();
+
    ISearcher* astar = new Astar();
    Solver<Searchable*,vector<MyState*> >* solver = new SearchSolver(astar);
    CacheManager* cm = new FileCacheManager();
+
    ClientHandler* clientHandler = new MyClientHandler(solver,cm);
    server->open(port,clientHandler);
+
    delete server;
+   delete astar;
+   delete solver;
+   delete cm;
+   delete clientHandler;
+
 
     return 0;
 }
